@@ -84,5 +84,11 @@ class AppTheme {
       textTheme: ButtonTextTheme.primary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
+    drawerTheme: DrawerThemeData(
+      backgroundColor: Colors.white,
+      clipBehavior: Clip.antiAlias,
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
   );
 }

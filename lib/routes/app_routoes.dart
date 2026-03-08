@@ -1,4 +1,6 @@
 // app_routes.dart
+import 'package:ecommerce/screens/add_to_basket/add_to_basket.dart';
+import 'package:ecommerce/screens/complete_details/complete_details.dart';
 import 'package:ecommerce/screens/home_srceen/home.dart';
 import 'package:ecommerce/screens/sign_Up/register_page.dart';
 import 'package:ecommerce/screens/sign_in/login_page.dart';
@@ -22,8 +24,8 @@ class AppRoutes {
      sgin_in: (context) => LoginPage(),
      sgin_up: (context) => RegisterPage(),
     home: (context) => const HomePage(),
-    // addToBasket: (context) => const AddToBasketPage(),
-    // completeDetails: (context) => const CompleteDetailsPage(),
+    addToBasket: (context) => const AddToBasketPage(),
+    completeDetails: (context) => const CompleteDetailsPage(),
     // orderComplete: (context) => const OrderCompletePage(),
     // trackOrder: (context) => const TrackOrderPage(),
     // orderList: (context) => const OrderListPage(),

@@ -23,6 +23,7 @@ class CustomTextF extends StatelessWidget {
       },
       onChanged: onChanged,
       decoration: InputDecoration(
+        
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Colors.grey),
@@ -37,7 +38,9 @@ class CustomTextF extends StatelessWidget {
         ),
         labelText: text,
         labelStyle: TextStyle(color: Colors.grey),
+        
       ),
+      
     );
   }
 }

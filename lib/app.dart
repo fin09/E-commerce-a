@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Fruit Salad App',
           theme: AppTheme.lightTheme,
-          initialRoute: AppRoutes.welcome,
+          initialRoute: AppRoutes.home,
           routes: AppRoutes.routes,
         );
       },
