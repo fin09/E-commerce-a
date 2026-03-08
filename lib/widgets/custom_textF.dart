@@ -25,14 +25,18 @@ class CustomTextF extends StatelessWidget {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.orange),
         ),
         labelText: text,
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.grey),
       ),
     );
   }

@@ -13,13 +13,13 @@ class CustomButton extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: TextButton(
         style: TextButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.orange,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         onPressed: onTap,
-        child: Text(text, style: TextStyle(color: Colors.black)),
+        child: Text(text, style: TextStyle(color: Colors.white)),
       ),
     );
   }
