@@ -5,9 +5,9 @@ import 'package:ecommerce/widgets/custom_textF.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CompleteDetailsPage extends StatelessWidget {
-  const CompleteDetailsPage({super.key});
-  static const String id = 'complete_details';
+class PaymentDetailsPage extends StatelessWidget {
+  const PaymentDetailsPage({Key? key}) : super(key: key);
+  static const String id = 'payment_details';
 
   @override
   Widget build(BuildContext context) {
@@ -45,52 +45,36 @@ class CompleteDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTextF(
-                      text: 'Delivery address',
-                      hintText: '10th avenue, Lekki, Lagos State',
+                      text: "Card Holder's Name",
+                      hintText: "Adolphus Chris",
                     ),
-                    SizedBox(height: 24.h),
+                    SizedBox(height: 20.h),
                     CustomTextF(
-                      text: 'Number we can call',
-                      hintText: '09090605708',
-                      keyboardType: TextInputType.phone,
+                      text: "Card Number",
+                      hintText: "1234 5678 9012 1314",
+                      keyboardType: TextInputType.number,
                     ),
-                    SizedBox(height: 60.h),
+                    SizedBox(height: 20.h),
                     Row(
                       children: [
                         Expanded(
-                          child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              minimumSize: Size(double.infinity, 56.h),
-                              side: BorderSide(color: AppColors.primary),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                            ),
-                            onPressed: () => Navigator.pushNamed(
-                              context,
-                              AppRoutes.orderComplete,
-                            ),
-                            child: Text(
-                              'Pay on delivery',
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          child: CustomTextF(text: "Date", hintText: "10/30"),
                         ),
-                        SizedBox(width: 16.w),
+                        SizedBox(width: 20.w),
                         Expanded(
-                          child: CustomButton(
-                            text: 'Pay with card',
-                            onTap: () => Navigator.pushNamed(
-                              context,
-                              AppRoutes.inputCard,
-                            ),
+                          child: CustomTextF(
+                            text: "CCV",
+                            hintText: "123",
+                            keyboardType: TextInputType.number,
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(height: 100.h),
+                    CustomButton(
+                      text: 'Complete Order',
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoutes.orderComplete),
                     ),
                   ],
                 ),

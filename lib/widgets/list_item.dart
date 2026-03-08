@@ -52,7 +52,7 @@ class ListItem1 extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  AppRoutes.completeDetails,
+                  AppRoutes.addToBasket,
                   arguments: products[index],
                 );
               },

@@ -128,7 +128,7 @@ class AppBar1 extends StatelessWidget implements PreferredSizeWidget {
                 height: 24.h,
               ),
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.addToBasket);
+                Navigator.pushNamed(context, AppRoutes.orderList);
               },
             ),
           ],
