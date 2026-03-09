@@ -5,9 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:ecommerce/widgets/drawer_app.dart';
+import 'package:provider/provider.dart';
+import 'package:ecommerce/providers/shop_provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String selectedCategory = "Hottest";
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ShopProvider>().loadProducts();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +56,9 @@ class HomePage extends StatelessWidget {
                     child: CustomTextF(
                       text: "Search for fruit salad combos",
                       obscureText: false,
+                      onChanged: (value) {
+                        context.read<ShopProvider>().setSearchQuery(value);
+                      },
                     ),
                   ),
                   SizedBox(height: 20.h),
@@ -55,44 +74,71 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10.h),
-                  SizedBox(height: 250.h, child: const ListItem1()),
+                  const ListItem1(tagPrefix: 'recommended'),
                   SizedBox(height: 20.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Hottest",
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            color: Colors.orange,
-                          ),
-                        ),
+                      _buildCategoryBtn(
+                        "Hottest",
+                        selectedCategory == "Hottest",
+                        (cat) {
+                          setState(() => selectedCategory = cat);
+                        },
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Popular",
-                          style: TextStyle(fontSize: 16.sp, color: Colors.grey),
-                        ),
+                      _buildCategoryBtn(
+                        "Popular",
+                        selectedCategory == "Popular",
+                        (cat) {
+                          setState(() => selectedCategory = cat);
+                        },
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "New combo",
-                          style: TextStyle(fontSize: 16.sp, color: Colors.grey),
-                        ),
+                      _buildCategoryBtn(
+                        "New combo",
+                        selectedCategory == "New combo",
+                        (cat) {
+                          setState(() => selectedCategory = cat);
+                        },
                       ),
                     ],
                   ),
                   SizedBox(height: 10.h),
-                  SizedBox(height: 250.h, child: const ListItem1()),
+                  const ListItem1(tagPrefix: 'category'),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryBtn(
+    String title,
+    bool isSelected,
+    Function(String) onTap,
+  ) {
+    return TextButton(
+      onPressed: () => onTap(title),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 16.sp,
+              color: isSelected ? Colors.orange : Colors.grey,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+          if (isSelected)
+            Container(
+              margin: EdgeInsets.only(top: 4.h),
+              height: 2.h,
+              width: 20.w,
+              color: Colors.orange,
+            ),
+        ],
       ),
     );
   }

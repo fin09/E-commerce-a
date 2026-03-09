@@ -1,28 +1,23 @@
 import 'package:ecommerce/models/product_model.dart';
+import 'package:ecommerce/routes/app_routoes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({super.key, required this.product});
+  const CustomCard({super.key, required this.product, this.heroTag});
   final ProductModel product;
+  final String? heroTag;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150.w,
-      padding: EdgeInsets.all(12.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Stack(
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(16.r),
+      elevation: 2,
+      shadowColor: Colors.black.withOpacity(0.05),
+      child: Container(
+        width: 150.w,
+        padding: EdgeInsets.all(12.w),
+        child: Stack(
         children: [
           // Heart Icon (Top Right)
           Positioned(
@@ -53,10 +48,11 @@ class CustomCard extends StatelessWidget {
                       return Container(
                         height: 80.h,
                         width: 80.w,
-                        color: Colors.grey[200],
-                        child: Icon(
-                          Icons.broken_image,
-                          color: Colors.grey[400],
+                        color: Colors.grey[100],
+                        padding: EdgeInsets.all(10.w),
+                        child: Image.asset(
+                          'assets/images/food_hub.png',
+                          fit: BoxFit.contain,
                         ),
                       );
                     },
@@ -90,16 +86,28 @@ class CustomCard extends StatelessWidget {
                       color: const Color(0xFFF08626),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(4.w),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFFAEB),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      color: const Color(0xFFF08626),
-                      size: 20.sp,
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.addToBasket,
+                        arguments: {
+                          'product': product,
+                          'heroTag': heroTag ?? 'recommended-${product.id}',
+                        },
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(4.w),
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFFFFAEB),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        color: const Color(0xFFF08626),
+                        size: 20.sp,
+                      ),
                     ),
                   ),
                 ],
@@ -108,6 +116,7 @@ class CustomCard extends StatelessWidget {
           ),
         ],
       ),
+      )
     );
   }
 }

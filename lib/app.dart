@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/helper/cache_helper.dart';
 import 'package:ecommerce/core/theme/app_theme.dart';
 import 'package:ecommerce/routes/app_routoes.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Fruit Salad App',
           theme: AppTheme.lightTheme,
-          initialRoute: AppRoutes.home,
+
+          initialRoute: CacheHelper.getBool(key: 'isFirst') == false
+              ? AppRoutes.home
+              : AppRoutes.welcome,
           routes: AppRoutes.routes,
         );
       },

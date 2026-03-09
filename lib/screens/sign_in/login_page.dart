@@ -11,7 +11,7 @@ import 'package:ecommerce/widgets/custom_textF.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
   // ignore: unused_field
   static String id = 'LoginPage';
   @override

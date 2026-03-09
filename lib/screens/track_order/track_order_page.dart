@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TrackOrderPage extends StatelessWidget {
-  const TrackOrderPage({Key? key}) : super(key: key);
+  const TrackOrderPage({super.key});
   static const String id = 'track_order';
 
   @override

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrderListPage extends StatelessWidget {
-  const OrderListPage({Key? key}) : super(key: key);
+  const OrderListPage({super.key});
   static const String id = 'order_list';
 
   @override

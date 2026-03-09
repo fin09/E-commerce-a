@@ -1,14 +1,34 @@
 import 'package:ecommerce/core/app_colors.dart';
+import 'package:ecommerce/models/product_model.dart';
 import 'package:ecommerce/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddToBasketPage extends StatelessWidget {
-  const AddToBasketPage({Key? key}) : super(key: key);
+class AddToBasketPage extends StatefulWidget {
+  const AddToBasketPage({super.key});
   static const String id = 'add_to_basket';
 
   @override
+  State<AddToBasketPage> createState() => _AddToBasketPageState();
+}
+
+class _AddToBasketPageState extends State<AddToBasketPage> {
+  int _quantity = 1;
+
+  @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    ProductModel? product;
+    String? heroTag;
+
+    if (args is Map) {
+      product = args['product'] as ProductModel?;
+      heroTag = args['heroTag'] as String?;
+    } else if (args is ProductModel) {
+      product = args;
+      heroTag = 'recommended-${product.id}'; // Fallback
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -55,10 +75,27 @@ class AddToBasketPage extends StatelessWidget {
                     ),
                   ),
                   Center(
-                    child: Image.asset(
-                      'assets/images/food_hub.png', // Fallback to food_hub if product image is not passed
-                      width: 200.w,
-                      height: 200.h,
+                    child: Hero(
+                      tag: heroTag ?? 'product-${product?.id}',
+                      child: product?.image.startsWith('http') == true
+                          ? Image.network(
+                              product!.image,
+                              width: 200.w,
+                              height: 200.h,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/food_hub.png',
+                                  width: 200.w,
+                                  height: 200.h,
+                                );
+                              },
+                            )
+                          : Image.asset(
+                              'assets/images/food_hub.png',
+                              width: 200.w,
+                              height: 200.h,
+                            ),
                     ),
                   ),
                 ],
@@ -80,7 +117,7 @@ class AddToBasketPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Quinoa Fruit Salad',
+                    product?.title ?? 'Product Details',
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
@@ -93,22 +130,28 @@ class AddToBasketPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          _buildQuantityBtn(Icons.remove, () {}),
+                          _buildQuantityBtn(Icons.remove, () {
+                            if (_quantity > 1) {
+                              setState(() => _quantity--);
+                            }
+                          }),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.w),
                             child: Text(
-                              '1',
+                              '$_quantity',
                               style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          _buildQuantityBtn(Icons.add, () {}),
+                          _buildQuantityBtn(Icons.add, () {
+                            setState(() => _quantity++);
+                          }),
                         ],
                       ),
                       Text(
-                        '₦ 2,000',
+                        '₦ ${(product?.price ?? 0.0) * _quantity}',
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
@@ -121,7 +164,7 @@ class AddToBasketPage extends StatelessWidget {
                   Divider(),
                   SizedBox(height: 16.h),
                   Text(
-                    'One Pack Contains:',
+                    'Description:',
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
@@ -131,16 +174,7 @@ class AddToBasketPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    'Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: AppColors.textBody,
-                      height: 1.5,
-                    ),
-                  ),
-                  SizedBox(height: 24.h),
-                  Text(
-                    'If you are looking for a new fruit salad to eat today, quinoa is the perfect brunch for you. make...',
+                    product?.description ?? 'No description available.',
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: AppColors.textBody,
@@ -165,7 +199,16 @@ class AddToBasketPage extends StatelessWidget {
                       Expanded(
                         child: CustomButton(
                           text: 'Add to basket',
-                          onTap: () {},
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '$_quantity ${product?.title} added to basket!',
+                                ),
+                                duration: const Duration(seconds: 1),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],

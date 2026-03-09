@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/helper/cache_helper.dart';
 import 'package:ecommerce/routes/app_routoes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +27,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
+              CacheHelper.saveData(key: 'isFirst', value: false);
               Navigator.pushNamed(context, AppRoutes.sgin_in);
             },
             child: Text(

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PaymentDetailsPage extends StatelessWidget {
-  const PaymentDetailsPage({Key? key}) : super(key: key);
+  const PaymentDetailsPage({super.key});
   static const String id = 'payment_details';
 
   @override

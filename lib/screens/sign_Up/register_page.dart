@@ -8,7 +8,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 // ignore: must_be_immutable
 class RegisterPage extends StatefulWidget {
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
   // ignore: unused_field
   static String id = 'RegisterPage';
 

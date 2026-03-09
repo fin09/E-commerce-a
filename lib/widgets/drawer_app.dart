@@ -1,11 +1,9 @@
-
+import 'package:ecommerce/routes/app_routoes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DrawerApp extends StatelessWidget {
-  const DrawerApp({
-    super.key,
-  });
+  const DrawerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +27,10 @@ class DrawerApp extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.shopping_cart),
-            title: Text('Cart'),
+            leading: const Icon(Icons.shopping_cart),
+            title: const Text('Cart'),
             onTap: () {
-              // Navigate to cart
+              Navigator.pushNamed(context, AppRoutes.orderList);
             },
           ),
           const Spacer(),

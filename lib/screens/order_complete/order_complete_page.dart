@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrderCompletePage extends StatelessWidget {
-  const OrderCompletePage({Key? key}) : super(key: key);
+  const OrderCompletePage({super.key});
   static const String id = 'order_complete';
 
   @override

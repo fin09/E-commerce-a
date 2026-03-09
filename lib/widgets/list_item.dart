@@ -3,6 +3,9 @@ import 'package:ecommerce/routes/app_routoes.dart';
 import 'package:ecommerce/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ecommerce/providers/shop_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:ecommerce/models/shop_product_model.dart';
 
 List<ProductModel> products = [
   ProductModel(
@@ -35,32 +38,59 @@ List<ProductModel> products = [
 ];
 
 class ListItem1 extends StatelessWidget {
-  const ListItem1({Key? key}) : super(key: key);
+  final String tagPrefix;
+  const ListItem1({super.key, required this.tagPrefix});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200.h,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: products.length,
-        clipBehavior: Clip.none,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  AppRoutes.addToBasket,
-                  arguments: products[index],
-                );
-              },
-              child: CustomCard(product: products[index]),
-            ),
-          );
-        },
-      ),
+    return Consumer<ShopProvider>(
+      builder: (context, provider, child) {
+        if (provider.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (provider.error != null) {
+          return Center(child: Text('Error: ${provider.error}'));
+        }
+
+        final displayedProducts = provider.products.isNotEmpty
+            ? provider.products.map((p) => p.toProductModel()).toList()
+            : products; // Fallback to static products if API list is empty
+
+        return SizedBox(
+          height: 200.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: displayedProducts.length,
+            clipBehavior: Clip.none,
+            itemBuilder: (context, index) {
+              final product = displayedProducts[index];
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.addToBasket,
+                      arguments: {
+                        'product': product,
+                        'heroTag': '$tagPrefix-${product.id}',
+                      },
+                    );
+                  },
+                  child: Hero(
+                    tag: '$tagPrefix-${product.id}',
+                    child: CustomCard(
+                      product: product,
+                      heroTag: '$tagPrefix-${product.id}',
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
