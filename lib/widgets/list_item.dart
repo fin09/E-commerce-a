@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ecommerce/providers/shop_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:ecommerce/models/shop_product_model.dart';
 
 List<ProductModel> products = [
   ProductModel(
